@@ -10,5 +10,8 @@ namespace TumblrUniversal.Tumblr {
     /// Defines constants corresponding to Tumblr API status codes.
     /// </summary>
     internal class ApiExceptionManager {
+
+
+
     }
 }

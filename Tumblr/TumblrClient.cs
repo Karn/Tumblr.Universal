@@ -12,9 +12,9 @@ namespace TumblrUniversal.Tumblr {
     /// </summary>
     public class TumblrClient {
 
-        internal static string API_KEY { get; private set; }
+        internal static string ConsumerKey { get; private set; }
 
-        internal static string SECRET_KEY { get; private set; }
+        internal static string ConsumerSecretKey { get; private set; }
 
         private static TumblrClient _authenticationService;
 
@@ -43,8 +43,8 @@ namespace TumblrUniversal.Tumblr {
         /// <param name="secretKey">The associated client secret key.</param>
         public static void RegisterAPIKeys(string publicKey, string secretKey) {
             if (!string.IsNullOrWhiteSpace(publicKey) && !string.IsNullOrWhiteSpace(secretKey)) {
-                API_KEY = publicKey;
-                SECRET_KEY = secretKey;
+                ConsumerKey = publicKey;
+                ConsumerSecretKey = secretKey;
             } else {
                 throw new Exception("One or both of the parameters is null or an empty string.");
             }
