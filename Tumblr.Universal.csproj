@@ -125,11 +125,6 @@
     <Content Include="Properties\Sapphire.Core.rd.xml" />
   </ItemGroup>
   <ItemGroup>
-    <SDKReference Include="SQLite.UAP.2015, Version=3.8.11.1">
-      <Name>SQLite for Universal App Platform</Name>
-    </SDKReference>
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="Core\Entities\" />
     <Folder Include="Utils\" />
   </ItemGroup>

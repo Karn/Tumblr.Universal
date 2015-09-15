@@ -5,6 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Tumblr.Universal.Core {
+
+    /// <summary>
+    /// Class that manages the Tumblr API's endpoints.
+    /// </summary>
     public class EndpointManager {
 
         //Need a dictionary of documented API endpoints and an alternate list of custom Endpoints 
