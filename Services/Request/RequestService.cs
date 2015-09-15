@@ -1,10 +1,15 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using Tumblr.Universal.Core;
+using Tumblr.Universal.Core.Entities;
 
 namespace Tumblr.Universal.Services.Request {
 
@@ -33,32 +38,21 @@ namespace Tumblr.Universal.Services.Request {
 
         }
 
-        /// <summary>
-        /// Performs a request to the Tumblr API to post authentication data.
-        /// </summary>
-        /// <param name="url">The endpoint to which the request is being made.</param>
-        /// <param name="postData">The body of the POST message.</param>
-        /// <returns></returns>
-        public async Task<string> PostAuthenticationData(string url, string postData) {
-            try {
-                using (var httpClient = new HttpClient()) {
-                    httpClient.MaxResponseContentBufferSize = int.MaxValue;
-                    httpClient.DefaultRequestHeaders.ExpectContinue = false;
-                    HttpRequestMessage requestMsg = new HttpRequestMessage();
+        public async Task<Account> RetrieveAccount() {
+            var result = await RequestBuilder.Instance.GET(EndpointManager.EndPoints["ACCOUNT"], new RequestParameters());
 
-                    requestMsg.Content = new StringContent(postData);
-                    requestMsg.Method = new HttpMethod("POST");
-                    requestMsg.RequestUri = new Uri(url, UriKind.Absolute);
-                    requestMsg.Content.Headers.ContentType = new MediaTypeHeaderValue("application/x-www-form-urlencoded");
+            if (result.StatusCode == HttpStatusCode.OK) {
+                try {
+                    Debug.WriteLine(await result.Content.ReadAsStringAsync());
+                    var parsedData = JsonConvert.DeserializeObject<ResponseModel.GetInfo>(await result.Content.ReadAsStringAsync());
 
-                    var response = await httpClient.SendAsync(requestMsg);
-                    return await response.Content.ReadAsStringAsync();
+                    return parsedData.response.user;
+                } catch {
+                    throw new Exception("Unable to deserialize response into JSON object.");
                 }
-            } catch (Exception ex) {
-                return null;
             }
+
+            throw new Exception(string.Format("Request failed, server returned '{0}' with reason '{1}'", result.StatusCode, result.ReasonPhrase));
         }
-
-
     }
 }

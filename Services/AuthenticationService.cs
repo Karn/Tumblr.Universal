@@ -13,13 +13,6 @@ namespace Tumblr.Universal.Services {
     /// </summary>
     public class AuthenticationService {
 
-        //OAuth URI Endpoints
-        public static readonly string RequestTokenURI = "http://www.tumblr.com/oauth/request_token";
-        public static readonly string AuthorizationURI = "http://www.tumblr.com/oauth/authorize";
-        public static readonly string AccessTokenURI = "http://www.tumblr.com/oauth/access_token";
-        //XAuth URI Endpoints
-        public static readonly string SecureAccessTokenURI = "https://www.tumblr.com/oauth/access_token";
-
         private static AuthenticationService _authenticationService;
 
         /// <summary>
@@ -55,11 +48,11 @@ namespace Tumblr.Universal.Services {
                 {"x_auth_username", RequestBuilder.Instance.Encode(userName)}}
             .Select(kv => kv.Key + "=" + kv.Value).Aggregate((i, j) => i + "&" + j);
 
-            var signatureString = "POST&" + Uri.EscapeDataString(SecureAccessTokenURI) + "&" +
+            var signatureString = "POST&" + Uri.EscapeDataString(TumblrClient.SecureAccessTokenURI) + "&" +
                 Uri.EscapeDataString(signatureParameters);
             var signature = RequestBuilder.Instance.GenerateSignature(signatureString, "auth");
 
-            var response = await RequestService.Instance.PostAuthenticationData(SecureAccessTokenURI,
+            var response = await RequestBuilder.Instance.PostAuthenticationData(TumblrClient.SecureAccessTokenURI,
                 signatureParameters + "&oauth_signature=" + Uri.EscapeDataString(signature));
             
             //Parse response data

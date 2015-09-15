@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tumblr.Universal.Services;
+using Tumblr.Universal.Services.Request;
 
 namespace Tumblr.Universal.Core {
 
@@ -13,10 +14,22 @@ namespace Tumblr.Universal.Core {
     /// </summary>
     public class TumblrClient {
 
+        //OAuth URI Endpoints
+        internal static readonly string RequestTokenURI = "http://www.tumblr.com/oauth/request_token";
+        internal static readonly string AuthorizationURI = "http://www.tumblr.com/oauth/authorize";
+        internal static readonly string AccessTokenURI = "http://www.tumblr.com/oauth/access_token";
+        //XAuth URI Endpoints
+        internal static readonly string SecureAccessTokenURI = "https://www.tumblr.com/oauth/access_token";
+
         /// <summary>
         /// Returns a publicly accessible instance of the AuthenticationService object.
         /// </summary>
         public AuthenticationService Authentication { get; private set; }
+
+        /// <summary>
+        /// Returns a publicly accessible instance of the RequestService object.
+        /// </summary>
+        public RequestService Requests { get; private set; }
 
         internal static string ConsumerKey { get; private set; }
 
@@ -44,6 +57,7 @@ namespace Tumblr.Universal.Core {
                 ConsumerSecretKey = secretKey;
 
                 Authentication = AuthenticationService.Instance;
+                Requests = RequestService.Instance;
             } else {
                 throw new Exception("One or both of the parameters is null or an empty string.");
             }

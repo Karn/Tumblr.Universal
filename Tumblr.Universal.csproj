@@ -114,6 +114,10 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\Entities\Account.cs" />
+    <Compile Include="Core\Entities\Blog.cs" />
+    <Compile Include="Core\Entities\ResponseModel.cs" />
+    <Compile Include="Core\Entities\Theme.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AuthenticationService.cs" />
     <Compile Include="Services\Request\RequestBuilder.cs" />
@@ -125,7 +129,6 @@
     <Content Include="Properties\Sapphire.Core.rd.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Core\Entities\" />
     <Folder Include="Utils\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

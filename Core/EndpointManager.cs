@@ -14,6 +14,7 @@ namespace Tumblr.Universal.Core {
         //Need a dictionary of documented API endpoints and an alternate list of custom Endpoints 
 
         private static Dictionary<string, string> _endpoints = new Dictionary<string, string> {
+            { "ACCOUNT", "https://api.tumblr.com/v2/user/info" },
             { "DASHBOARD", "/dashboard" },
             //{ "ACTIVITY", "" },
             { "POSTS", "" }
