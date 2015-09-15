@@ -84,7 +84,7 @@ namespace TumblrUniversal.Services.Request {
         /// <param name="tokenSecret">The session token associated with the account.</param>
         /// <returns></returns>
         public string GenerateSignature(string signatureBaseString, string tokenSecret = "") {
-            IBuffer KeyMaterial = CryptographicBuffer.ConvertStringToBinary(TumblrClient.ConsumerSecretKey + "&" + (string.IsNullOrWhiteSpace(tokenSecret) ? Authentication.TokenSecret : ""), BinaryStringEncoding.Utf8);
+            IBuffer KeyMaterial = CryptographicBuffer.ConvertStringToBinary(TumblrClient.ConsumerSecretKey + "&" + (string.IsNullOrWhiteSpace(tokenSecret) ? TumblrClient.AccessSecretToken : ""), BinaryStringEncoding.Utf8);
             MacAlgorithmProvider HmacSha1Provider = MacAlgorithmProvider.OpenAlgorithm("HMAC_SHA1");
             CryptographicKey MacKey = HmacSha1Provider.CreateKey(KeyMaterial);
             IBuffer DataToBeSigned = CryptographicBuffer.ConvertStringToBinary(signatureBaseString, BinaryStringEncoding.Utf8);

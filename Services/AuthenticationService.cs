@@ -40,7 +40,7 @@ namespace TumblrUniversal.Services {
 
         }
 
-        public async Task<string> RequestAccessToken(string userName, string password) {
+        public async Task RequestAccessToken(string userName, string password) {
             var nonce = RequestBuilder.Instance.GetNonce();
             var timeStamp = RequestBuilder.Instance.GetTimeStamp();
 
@@ -67,12 +67,16 @@ namespace TumblrUniversal.Services {
                 var tokens = response.Split('&');
                 var accessToken = tokens[0].Split('=');
                 var accessTokenSecret = tokens[1].Split('=');
-
-                return [accessToken, accessTokenSecret];
+                
+                try {
+                    TumblrClient.UpdateAccessToken(accessToken[1], accessTokenSecret[1]);
+                } catch (Exception e) {
+                    System.Diagnostics.Debug.WriteLine(e.Message);
+                    throw new Exception("There was an error parsing the response.");
+                }
             } else if (response == "Invalid xAuth credentials.") {
                 throw new Exception(response);
             }
-            throw new Exception("An unknown error occured while parsing the request.");
         }
     }
 }

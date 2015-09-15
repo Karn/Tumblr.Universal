@@ -34,8 +34,8 @@ namespace TumblrUniversal.Services.Request {
             this.Add("oauth_nonce", nonce);
             this.Add("oauth_signature_method", "HMAC-SHA1");
             this.Add("oauth_timestamp", timestamp);
-            this.Add("oauth_token", Authentication.Token);
-            this.Add("oauth_verifier", Authentication.TokenVerifier);
+            this.Add("oauth_token", TumblrClient.AccessToken);
+            this.Add("oauth_verifier", string.Empty);
             this.Add("oauth_version", "1.0");
         }
     }
