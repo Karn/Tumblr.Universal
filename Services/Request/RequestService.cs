@@ -6,7 +6,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TumblrUniversal.Services.Request {
+namespace Tumblr.Universal.Services.Request {
 
     /// <summary>
     /// Provides methods that interface with the Tumblr API.

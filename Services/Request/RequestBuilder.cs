@@ -4,12 +4,12 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
-using TumblrUniversal.Tumblr;
+using Tumblr.Universal.Core;
 using Windows.Security.Cryptography;
 using Windows.Security.Cryptography.Core;
 using Windows.Storage.Streams;
 
-namespace TumblrUniversal.Services.Request {
+namespace Tumblr.Universal.Services.Request {
 
     /// <summary>
     /// Creates and signs an authenticated request to the Tumblr API.

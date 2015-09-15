@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TumblrUniversal.Tumblr;
+using Tumblr.Universal.Core;
 
-namespace TumblrUniversal.Services.Request {
+namespace Tumblr.Universal.Services.Request {
 
     /// <summary>
     /// Initializes a dictionary to store client application parameters for 

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TumblrUniversal.Tumblr {
+namespace Tumblr.Universal.Core {
 
     /// <summary>
     /// Defines constants corresponding to Tumblr API status codes.

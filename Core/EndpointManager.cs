@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TumblrUniversal.Tumblr {
+namespace Tumblr.Universal.Core {
     public class EndpointManager {
 
         //Need a dictionary of documented API endpoints and an alternate list of custom Endpoints 

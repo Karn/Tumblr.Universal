@@ -18,7 +18,7 @@ Then manually add the project to your UAP solution.
 
 Create a new instance of the Client object with the API and API secret keys:
 
-```var client = new TumblrUniversal.Tumblr.TumblrClient("API_KEY", "API_SECRET_KEY");```
+```var client = new Tumblr.Universal.Core.TumblrClient("API_KEY", "API_SECRET_KEY");```
 
 Send username and password:
 

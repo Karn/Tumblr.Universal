@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TumblrUniversal", "TumblrUniversal.csproj", "{E30A0EBC-6911-4571-AFB3-179CD6E67656}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tumblr.Universal", "Tumblr.Universal.csproj", "{E30A0EBC-6911-4571-AFB3-179CD6E67656}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TumblrUniversal.Services.Request;
-using TumblrUniversal.Tumblr;
+using Tumblr.Universal.Services.Request;
+using Tumblr.Universal.Core;
 
-namespace TumblrUniversal.Services {
+namespace Tumblr.Universal.Services {
 
     /// <summary>
     /// Class that handles account authentication via xAuth.

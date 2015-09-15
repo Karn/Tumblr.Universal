@@ -4,9 +4,9 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TumblrUniversal.Services;
+using Tumblr.Universal.Services;
 
-namespace TumblrUniversal.Tumblr {
+namespace Tumblr.Universal.Core {
 
     /// <summary>
     /// Global Tumblr Library object.

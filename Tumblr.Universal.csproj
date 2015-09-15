@@ -7,8 +7,8 @@
     <ProjectGuid>{E30A0EBC-6911-4571-AFB3-179CD6E67656}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TumblrUniversal</RootNamespace>
-    <AssemblyName>TumblrUniversal</AssemblyName>
+    <RootNamespace>Tumblr.Universal</RootNamespace>
+    <AssemblyName>Tumblr.Universal</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion>10.0.10240.0</TargetPlatformVersion>
@@ -47,7 +47,7 @@
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <ErrorReport>prompt</ErrorReport>
     <Prefer32Bit>true</Prefer32Bit>
-    <DocumentationFile>bin\ARM\Debug\TumblrUniversal.xml</DocumentationFile>
+    <DocumentationFile>bin\ARM\Debug\Tumblr.Universal.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM'">
     <PlatformTarget>ARM</PlatformTarget>
@@ -119,9 +119,9 @@
     <Compile Include="Services\Request\RequestBuilder.cs" />
     <Compile Include="Services\Request\RequestParameters.cs" />
     <Compile Include="Services\Request\RequestService.cs" />
-    <Compile Include="Tumblr\ApiExceptionManager.cs" />
-    <Compile Include="Tumblr\EndpointManager.cs" />
-    <Compile Include="Tumblr\TumblrClient.cs" />
+    <Compile Include="Core\ApiExceptionManager.cs" />
+    <Compile Include="Core\EndpointManager.cs" />
+    <Compile Include="Core\TumblrClient.cs" />
     <Content Include="Properties\Sapphire.Core.rd.xml" />
   </ItemGroup>
   <ItemGroup>
@@ -130,7 +130,7 @@
     </SDKReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Tumblr\Entities\" />
+    <Folder Include="Core\Entities\" />
     <Folder Include="Utils\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
