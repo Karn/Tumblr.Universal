@@ -54,5 +54,25 @@ namespace Tumblr.Universal.Services.Request {
 
             throw new Exception(string.Format("Request failed, server returned '{0}' with reason '{1}'", result.StatusCode, result.ReasonPhrase));
         }
+
+        public async Task<List<ActivityItem>> RetrieveActivity(string blogName) {
+            var result = await RequestBuilder.Instance.GET("https://api.tumblr.com/v2/blog/" + blogName + ".tumblr.com/notifications",
+                    new RequestParameters() {
+                        { "rfg", "true" }
+                    });
+
+            if (result.StatusCode == HttpStatusCode.OK) {
+                try {
+                    Debug.WriteLine(await result.Content.ReadAsStringAsync());
+                    var parsedData = JsonConvert.DeserializeObject<ResponseModel.GetActivity>(await result.Content.ReadAsStringAsync());
+
+                    return parsedData.response.notifications;
+                } catch {
+                    throw new Exception("Unable to deserialize response into JSON object.");
+                }
+            }
+
+            throw new Exception(string.Format("Request failed, server returned '{0}' with reason '{1}'", result.StatusCode, result.ReasonPhrase));
+        }
     }
 }

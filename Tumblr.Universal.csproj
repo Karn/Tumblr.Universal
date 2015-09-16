@@ -115,6 +115,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\Entities\Account.cs" />
+    <Compile Include="Core\Entities\ActivityItem.cs" />
     <Compile Include="Core\Entities\Blog.cs" />
     <Compile Include="Core\Entities\ResponseModel.cs" />
     <Compile Include="Core\Entities\Theme.cs" />

@@ -83,7 +83,7 @@ namespace Tumblr.Universal.Core.Entities {
         /// ThemeObject which represents the theming values
         /// </summary>
         [JsonProperty("theme")]
-        internal Theme BlogTheme { get; set; }
+        public Theme BlogTheme { get; set; }
 
         /// <summary>
         /// Number of other blogs that are following this blog.

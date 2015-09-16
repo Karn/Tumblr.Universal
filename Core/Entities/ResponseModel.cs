@@ -12,6 +12,11 @@ namespace Tumblr.Universal.Core.Entities {
             public UserResponse response { get; set; }
         }
 
+        public class GetActivity {
+            public Meta meta { get; set; }
+            public ActivityResponse response { get; set; }
+        }
+
         public class Meta {
             public int status { get; set; }
             public string msg { get; set; }
@@ -19,6 +24,10 @@ namespace Tumblr.Universal.Core.Entities {
 
         public class UserResponse {
             public Account user { get; set; }
+        }
+
+        public class ActivityResponse {
+            public List<ActivityItem> notifications { get; set; }
         }
 
     }
