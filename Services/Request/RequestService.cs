@@ -66,6 +66,10 @@ namespace Tumblr.Universal.Services.Request {
                     Debug.WriteLine(await result.Content.ReadAsStringAsync());
                     var parsedData = JsonConvert.DeserializeObject<ResponseModel.GetActivity>(await result.Content.ReadAsStringAsync());
 
+                    foreach (var item in parsedData.response.notifications) {
+                        item.date = new DateTime(1970, 1, 1, 0, 0, 0, 0).AddSeconds(item.timestamp).Date;
+                    }
+
                     return parsedData.response.notifications;
                 } catch {
                     throw new Exception("Unable to deserialize response into JSON object.");

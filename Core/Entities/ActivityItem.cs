@@ -8,7 +8,7 @@ namespace Tumblr.Universal.Core.Entities {
 
     public class ActivityItem {
         public int timestamp { get; set; }
-        public string date { get; set; }
+        public DateTime date { get; set; }
         public string type { get; set; }
         public string from_tumblelog_name { get; set; }
         public string from_tumblelog_avatar {
