@@ -38,6 +38,11 @@ namespace Tumblr.Universal.Services.Request {
 
         }
 
+
+        /// <summary>
+        /// Fetches the account information of the blogs associated with the current session.
+        /// </summary>
+        /// <returns>Parsed JSON as an 'Account' object.</returns>
         public async Task<Account> RetrieveAccount() {
             var result = await RequestBuilder.Instance.GET(EndpointManager.EndPoints["ACCOUNT"], new RequestParameters());
 
@@ -55,6 +60,11 @@ namespace Tumblr.Universal.Services.Request {
             throw new Exception(string.Format("Request failed, server returned '{0}' with reason '{1}'", result.StatusCode, result.ReasonPhrase));
         }
 
+        /// <summary>
+        /// Retrieves the activity feed of the selected account.
+        /// </summary>
+        /// <param name="blogName"></param>
+        /// <returns>List of 'ActivityItem' objects.</returns>
         public async Task<List<ActivityItem>> RetrieveActivity(string blogName) {
             var result = await RequestBuilder.Instance.GET("https://api.tumblr.com/v2/blog/" + blogName + ".tumblr.com/notifications",
                     new RequestParameters() {
