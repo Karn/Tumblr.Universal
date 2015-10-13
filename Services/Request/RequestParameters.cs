@@ -11,7 +11,7 @@ namespace Tumblr.Universal.Services.Request {
     /// Initializes a dictionary to store client application parameters for 
     /// a Http request.
     /// </summary>
-    internal class RequestParameters : SortedDictionary<string, string> {
+    public class RequestParameters : SortedDictionary<string, string> {
 
         /// <summary>
         /// Format and return the dictionary as a string representation.

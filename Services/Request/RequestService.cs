@@ -88,5 +88,30 @@ namespace Tumblr.Universal.Services.Request {
 
             throw new Exception(string.Format("Request failed, server returned '{0}' with reason '{1}'", result.StatusCode, result.ReasonPhrase));
         }
+
+        /// <summary>
+        /// Retrieves posts from a given API endpoint.
+        /// </summary>
+        /// <param name="blogName"></param>
+        /// <returns>List of 'ActivityItem' objects.</returns>
+        public async Task<List<PostItem>> RetrievePosts(string endPoint, RequestParameters parameters) {
+            parameters.Add("api_key", TumblrClient.ConsumerKey);
+            parameters.Add("reblog_info", "true");
+
+            var result = await RequestBuilder.Instance.GET(endPoint, parameters);
+
+            if (result.StatusCode == HttpStatusCode.OK) {
+                try {
+                    Debug.WriteLine(await result.Content.ReadAsStringAsync());
+                    var parsedData = JsonConvert.DeserializeObject<ResponseModel.GetPosts>(await result.Content.ReadAsStringAsync());
+
+                    return parsedData.response.posts;
+                } catch {
+                    throw new Exception("Unable to deserialize response into JSON object.");
+                }
+            }
+
+            throw new Exception(string.Format("Request failed, server returned '{0}' with reason '{1}'", result.StatusCode, result.ReasonPhrase));
+        }
     }
 }
