@@ -77,7 +77,7 @@ namespace Tumblr.Universal.Services.Request {
                     var parsedData = JsonConvert.DeserializeObject<ResponseModel.GetActivity>(await result.Content.ReadAsStringAsync());
 
                     foreach (var item in parsedData.response.notifications) {
-                        item.date = new DateTime(1970, 1, 1, 0, 0, 0, 0).AddSeconds(item.timestamp).Date;
+                        item.Date = new DateTime(1970, 1, 1, 0, 0, 0, 0).AddSeconds(item.Timestamp).Date;
                     }
 
                     return parsedData.response.notifications;
