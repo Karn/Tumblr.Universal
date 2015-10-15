@@ -10,7 +10,6 @@ namespace Tumblr.Universal.Core.Entities {
     /// <summary>
     /// Handles 'Blog' JSON deserialzation and DataBase object manipulations.
     /// </summary>
-    [JsonObject(MemberSerialization.OptIn)]
     public class Blog {
 
         /// <summary>

@@ -92,7 +92,8 @@ namespace Tumblr.Universal.Services.Request {
         /// <summary>
         /// Retrieves posts from a given API endpoint.
         /// </summary>
-        /// <param name="blogName"></param>
+        /// <param name="endPoint">The endpoint from which the requests are to be retrieved from. Eg. /dashboard</param>
+        /// <param name="parameters">List of parameters that are to be included in the request. Eg. Key: "reblog_info" Value: "true"</param>
         /// <returns>List of 'ActivityItem' objects.</returns>
         public async Task<List<PostItem>> RetrievePosts(string endPoint, RequestParameters parameters) {
             parameters.Add("api_key", TumblrClient.ConsumerKey);

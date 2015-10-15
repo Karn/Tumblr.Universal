@@ -49,6 +49,11 @@ namespace Tumblr.Universal.Services.Request {
             this.Add("oauth_version", "1.0");
         }
 
+        /// <summary>
+        /// Generates an encoded string containing the request authentication data.
+        /// </summary>
+        /// <param name="signature"></param>
+        /// <returns></returns>
         public string GenerateAuthenticationData(string signature) {
             return "oauth_consumer_key=\"" + TumblrClient.ConsumerKey +
                 "\", oauth_nonce=\"" + this["oauth_nonce"] +

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using Windows.UI.Xaml;
 
 namespace Tumblr.Universal.Core.Entities {
 
@@ -24,16 +23,6 @@ namespace Tumblr.Universal.Core.Entities {
             get { return "http://api.tumblr.com/v2/blog/" + Name + ".tumblr.com/avatar/96"; }
         }
 
-        //public Visibility IsEditable {
-        //	get {
-        //		if (UserPreferences.CurrentBlog != null) {
-        //			if (Name == UserPreferences.CurrentBlog.Name)
-        //				return Visibility.Visible;
-        //		}
-        //		return Visibility.Collapsed;
-        //	}
-        //}
-
         /// <summary>
         /// ID of the post relative to the tumblr API.
         /// </summary>
@@ -53,7 +42,7 @@ namespace Tumblr.Universal.Core.Entities {
         public string format { get; set; }
         public string reblog_key { get; set; }
         public string[] tags { get; set; }
-        public string tags_as_str {
+        public string TagsAsString {
             get {
                 try {
                     var converted = "";
@@ -69,7 +58,6 @@ namespace Tumblr.Universal.Core.Entities {
         public bool liked { get; set; }
         public string state { get; set; }
         public Blog blog { get; set; }
-        public string slug { get; set; }
         public string short_url { get; set; }
         public bool followed { get; set; }
 
@@ -97,10 +85,23 @@ namespace Tumblr.Universal.Core.Entities {
         [JsonProperty("excerpt")]
         public string Excerpt { get; set; }
 
-        public bool can_reply { get; set; }
-        public string caption { get; set; }
-        public string image_permalink { get; set; }
-        public ObservableCollection<Photo> photos { get; set; }
+        /// <summary>
+        /// Returns true of the post can be replied to.
+        /// </summary>
+        [JsonProperty("can_reply")]
+        public bool CanReply { get; set; }
+
+        /// <summary>
+        /// User entered capton associated with the post.
+        /// </summary>
+        [JsonProperty("caption")]
+        public string Caption { get; set; }
+
+        /// <summary>
+        /// List of photos associated with the post.
+        /// </summary>
+        [JsonProperty("photos")]
+        public ObservableCollection<Photo> PostPhotos { get; set; }
         public string link_url { get; set; }
         public string photoset_layout { get; set; }
         public string permalink_url { get; set; }
@@ -151,10 +152,29 @@ namespace Tumblr.Universal.Core.Entities {
                 _source = value;
             }
         }
-        public Photo.AltSize path_to_low_res_pic {
+
+        /// <summary>
+        /// Returns the first image in the list of alternate images. 
+        /// It is also the lowest resolution alternate image.
+        /// </summary>
+        public Photo.AltSize LowResImage {
             get {
                 try {
-                    return photos.First().alt_sizes.First();
+                    return PostPhotos.First().AlternateSizes.First();
+                } catch {
+                    return new Photo.AltSize();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Returns the last image in the list of alternate images. 
+        /// It is also the highest resolution alternate image.
+        /// </summary>
+        public Photo.AltSize HighResImage {
+            get {
+                try {
+                    return PostPhotos.First().AlternateSizes.Last();
                 } catch {
                     return new Photo.AltSize();
                 }
@@ -189,17 +209,12 @@ namespace Tumblr.Universal.Core.Entities {
         /// </summary>
         [JsonProperty("answer")]
         public string Answer { get; set; }
-
-        private List<Note> _notes = new List<Note>();
-
-        public List<Note> notes {
-            get {
-                return _notes;
-            }
-            set {
-                _notes = value;
-            }
-        }
+        
+        /// <summary>
+        /// Detailed summary of the notes associated with the post.
+        /// </summary>
+        [JsonProperty("notes")]
+        public List<Note> PostNotes { get; set; }
 
         public string special_case { get; internal set; }
 
@@ -215,7 +230,10 @@ namespace Tumblr.Universal.Core.Entities {
         [JsonProperty("dialogue")]
         public List<DialogueObject> Dialogue { get; set; }
 
-
+        /// <summary>
+        /// Represents the 'DialogObject' object which is deserialized from JSON.
+        /// Contains a Label of the conversation and the Phrase associated with the Label.
+        /// </summary>
         public class DialogueObject {
 
             /// <summary>
@@ -231,17 +249,39 @@ namespace Tumblr.Universal.Core.Entities {
             public string Phrase { get; set; }
         }
 
+        /// <summary>
+        /// Represents the 'Note' object which is deserialized from JSON.
+        /// Contains relevant details about a given 'Note' on a post. 
+        /// </summary>
         public class Note {
-            public string timestamp { get; set; }
 
+            /// <summary>
+            /// Returns the timestamp for the note.
+            /// Indicates when the note was added to the post.
+            /// </summary>
+            [JsonProperty("timestamp")]
+            public string Timestamp { get; set; }
+
+            /// <summary>
+            /// Returns the name of the blog which resulted in the generation of the note.
+            /// </summary>
             [JsonProperty("blog_name")]
             public string Name { get; set; }
+
+            /// <summary>
+            /// Returns the avatar of the blog which resulted in the generation of the note.
+            /// </summary>
             public string Avatar {
                 get {
                     return "http://api.tumblr.com/v2/blog/" + Name + ".tumblr.com/avatar/96";
                 }
             }
-            public string answer_text { get; set; }
+
+            /// <summary>
+            /// Returns any additional text in the event that the post can be replied to.
+            /// </summary>
+            [JsonProperty("answer_text")]
+            public string Reply { get; set; }
             private string _type { get; set; }
             public string type {
                 get {
@@ -255,7 +295,7 @@ namespace Tumblr.Universal.Core.Entities {
                     } else if (value.Contains("reblog")) {
                         _type = "reblogged this.";
                     } else if (value.Contains("answer")) {
-                        _type = "answered: " + answer_text;
+                        _type = "answered: " + Reply;
                     }
                 }
             }

@@ -100,7 +100,7 @@ namespace Tumblr.Universal.Services.Request {
         /// </summary>
         /// <param name="url">The endpoint to which the request is being made.</param>
         /// <param name="postData">The body of the POST message.</param>
-        /// <returns></returns>
+        /// <returns>String containing the result of the request.</returns>
         public async Task<string> PostAuthenticationData(string url, string postData) {
             try {
                 using (var httpClient = new HttpClient()) {
@@ -117,10 +117,16 @@ namespace Tumblr.Universal.Services.Request {
                     return await response.Content.ReadAsStringAsync();
                 }
             } catch (Exception ex) {
-                return null;
+                return (new HttpResponseMessage() { StatusCode = HttpStatusCode.NotFound, ReasonPhrase = ex.Message }).ToString();
             }
         }
 
+        /// <summary>
+        /// Performs a GET request to the Tumblr API.
+        /// </summary>
+        /// <param name="URL">The endpoint to which the request is being made.</param>
+        /// <param name="parameters">The query of the GET request.</param>
+        /// <returns>String containing the result of the request.</returns>
         public async Task<HttpResponseMessage> GET(string URL, RequestParameters parameters) {
             try {
                 using (var client = new HttpClient(new HttpClientHandler { AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate })) {
@@ -144,17 +150,23 @@ namespace Tumblr.Universal.Services.Request {
                     requestMessage.Headers.Add("Accept-Encoding", "gzip,deflate");
                     requestMessage.Headers.Add("User-Agent", "Android");
                     requestMessage.Headers.Add("X-Version", "device/3.8.8.41/0/4.4.4");
-                    requestMessage.Headers.Add("X-YUser-Agent", "Mozilla/5.0 (Linux; Android 4.4; Nexus 5 Build/KRT16M)/Tumblr/device/3.8.8.41/0/4.4.4");
+                    requestMessage.Headers.Add("X-YUser-Agent", "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/KRT16M)/Tumblr/device/3.8.8.41/0/4.4.4");
                     requestMessage.Headers.Authorization = new AuthenticationHeaderValue("OAuth", authenticationData);
                     requestMessage.Headers.IfModifiedSince = DateTime.UtcNow.Date;
 
                     return await client.SendAsync(requestMessage);
                 }
             } catch (Exception ex) {
-                return new HttpResponseMessage() { StatusCode = HttpStatusCode.NotFound };
+                return new HttpResponseMessage() { StatusCode = HttpStatusCode.NotFound, ReasonPhrase = ex.Message };
             }
         }
 
+        /// <summary>
+        /// Performs a POST request to the Tumblr API.
+        /// </summary>
+        /// <param name="URL">The endpoint to which the request is being made.</param>
+        /// <param name="parameters">The body of the POST request.</param>
+        /// <returns>String containing the result of the request.</returns>
         public async Task<HttpResponseMessage> POST(string URL, RequestParameters parameters) {
             try {
                 using (var client = new HttpClient() { MaxResponseContentBufferSize = int.MaxValue }) {
@@ -183,7 +195,7 @@ namespace Tumblr.Universal.Services.Request {
                     return await client.SendAsync(requestMessage);
                 }
             } catch (Exception ex) {
-                return new HttpResponseMessage() { StatusCode = HttpStatusCode.NotFound };
+                return new HttpResponseMessage() { StatusCode = HttpStatusCode.NotFound, ReasonPhrase = ex.Message };
             }
         }
 
@@ -215,9 +227,10 @@ namespace Tumblr.Universal.Services.Request {
                     return await client.SendAsync(requestMessage);
                 }
             } catch (Exception ex) {
-                return new HttpResponseMessage() { StatusCode = HttpStatusCode.NotFound };
+                return new HttpResponseMessage() { StatusCode = HttpStatusCode.NotFound, ReasonPhrase = ex.Message };
             }
         }
+
         private static async Task<byte[]> BuildByteArray(string boundary, StorageFile file, RequestParameters parameters) {
             var paramsToMFC = string.Join("--" + boundary + "\r\n",
                 parameters.Select(p =>

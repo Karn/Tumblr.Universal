@@ -33,6 +33,12 @@ namespace Tumblr.Universal.Services {
 
         }
 
+        /// <summary>
+        /// Makes a request to retrieve an authenticated access token using OAuth 2.0.
+        /// </summary>
+        /// <param name="userName">The username(email) of the Tumblr account.</param>
+        /// <param name="password">The password of the Tumblr account.</param>
+        /// <returns></returns>
         public async Task RequestAccessToken(string userName, string password) {
             var nonce = RequestBuilder.Instance.GetNonce();
             var timeStamp = RequestBuilder.Instance.GetTimeStamp();

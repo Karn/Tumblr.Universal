@@ -1,12 +1,11 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Tumblr.Universal.Core.Entities {
 
+    /// <summary>
+    /// ActivityItem object stores information about a specific deserialized JSON notification.
+    /// </summary>
     public class ActivityItem {
 
         /// <summary>

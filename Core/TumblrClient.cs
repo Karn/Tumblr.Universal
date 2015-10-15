@@ -90,10 +90,5 @@ namespace Tumblr.Universal.Core {
         public string GetAccessSecretToken {
             get { return AccessSecretToken; }
         }
-
-        public string RetrieveRawResponse(string endpoint) {
-
-            return null;
-        }
     }
 }
