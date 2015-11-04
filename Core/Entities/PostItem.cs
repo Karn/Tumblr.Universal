@@ -35,13 +35,38 @@ namespace Tumblr.Universal.Core.Entities {
         [JsonProperty("post_url")]
         public string PostUrl { get; set; }
 
+        /// <summary>
+        /// Stores type of Tumblr object this PostItem object is.
+        /// Eg. Post, Takeover Banner, Sponsored.
+        /// </summary>
+        [JsonProperty("object_type")]
         public string object_type { get; set; }
-        public string type { get; set; }
-        public string timestamp { get; set; }
-        public string date { get; set; }
-        public string format { get; set; }
-        public string reblog_key { get; set; }
-        public string[] tags { get; set; }
+
+        /// <summary>
+        /// Type of post object.
+        /// Eg. Text, Video, Chat, etc.
+        /// </summary>
+        [JsonProperty("type")]
+        public string Type { get; set; }
+
+        /// <summary>
+        /// The time the post was created/reblogged.
+        /// </summary>
+        [JsonProperty("timestamp")]
+        public string TimeStamp { get; set; }
+
+        /// <summary>
+        /// Indicates whether the post format type, either markdown or html.
+        /// </summary>
+        [JsonProperty("format")]
+        public string PostContentFormat { get; set; }
+
+        /// <summary>
+        /// The key used to identify the post when reblogging.
+        /// </summary>
+        [JsonProperty("reblog_key")]
+        public string ReblogKey { get; set; }
+        private string[] tags { get; set; }
         public string TagsAsString {
             get {
                 try {
@@ -55,7 +80,13 @@ namespace Tumblr.Universal.Core.Entities {
         }
         public string source_url { get; set; }
         public string source_title { get; set; }
-        public bool liked { get; set; }
+
+        /// <summary>
+        /// Returns a boolean indicating whether this post has been liked by
+        /// the current account.
+        /// </summary>
+        [JsonProperty("liked")]
+        public bool Liked { get; set; }
         public string state { get; set; }
         public Blog blog { get; set; }
         public string short_url { get; set; }
@@ -215,9 +246,7 @@ namespace Tumblr.Universal.Core.Entities {
         /// </summary>
         [JsonProperty("notes")]
         public List<Note> PostNotes { get; set; }
-
-        public string special_case { get; internal set; }
-
+        
         /// <summary>
         /// Returns the name of the blog from which the post has been reblogged from.
         /// </summary>
@@ -283,7 +312,12 @@ namespace Tumblr.Universal.Core.Entities {
             [JsonProperty("answer_text")]
             public string Reply { get; set; }
             private string _type { get; set; }
-            public string type {
+
+            /// <summary>
+            /// Returns a friendly string representing what the type of note is.
+            /// </summary>
+            [JsonProperty("type")]
+            public string Type {
                 get {
                     return _type;
                 }
