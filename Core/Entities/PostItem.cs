@@ -78,8 +78,6 @@ namespace Tumblr.Universal.Core.Entities {
                 return "";
             }
         }
-        public string source_url { get; set; }
-        public string source_title { get; set; }
 
         /// <summary>
         /// Returns a boolean indicating whether this post has been liked by
@@ -129,10 +127,29 @@ namespace Tumblr.Universal.Core.Entities {
         public string Caption { get; set; }
 
         /// <summary>
+        /// The URL to the original post.
+        /// </summary>
+        [JsonProperty("source_url")]
+        public string SourceUrl { get; set; }
+
+        /// <summary>
+        /// The title of the blog/source of the original post.
+        /// </summary>
+        [JsonProperty("source_title")]
+        public string SourceTitle { get; set; }
+
+        /// <summary>
         /// List of photos associated with the post.
         /// </summary>
         [JsonProperty("photos")]
         public ObservableCollection<Photo> PostPhotos { get; set; }
+
+        /// <summary>
+        /// List of photos associated with the post.
+        /// </summary>
+        [JsonProperty("trail")]
+        public List<CaptionItem> Trail { get; set; }
+
         public string link_url { get; set; }
         public string photoset_layout { get; set; }
         public string permalink_url { get; set; }
@@ -332,6 +349,55 @@ namespace Tumblr.Universal.Core.Entities {
                         _type = "answered: " + Reply;
                     }
                 }
+            }
+        }
+
+        /// <summary>
+        /// A class that represents a given users caption for a this post.
+        /// </summary>
+        public class CaptionItem {
+
+            /// <summary>
+            /// The details of the given user.
+            /// </summary>
+            [JsonProperty("blog")]
+            public Source Blog { get; set; }
+
+            /// <summary>
+            /// The content of the Caption posted by a blog.
+            /// </summary>
+            [JsonProperty("content")]
+            public string Content { get; set; }
+
+            /// <summary>
+            /// Indicates whether the current caption item is the root item.
+            /// </summary>
+            [JsonProperty("is_root_item")]
+            public bool IsRootItem { get; set; }
+
+            /// <summary>
+            /// Indicates whether the current caption item is the top most item.
+            /// </summary>
+            [JsonProperty("is_current_item")]
+            public bool IsActive { get; set; }
+            
+            /// <summary>
+            /// Class that represents the high-level details of a user.
+            /// </summary>
+            public class Source {
+
+                /// <summary>
+                /// The name of the blog that had posted this caption.
+                /// </summary>
+                [JsonProperty("name")]
+                public string Name { get; set; }
+
+                /// <summary>
+                /// Indicates whether the post that posted this caption is still active.
+                /// </summary>
+                [JsonProperty("active")]
+                public bool Active { get; set; }
+
             }
         }
     }

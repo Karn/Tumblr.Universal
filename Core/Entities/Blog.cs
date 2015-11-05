@@ -10,6 +10,7 @@ namespace Tumblr.Universal.Core.Entities {
     /// <summary>
     /// Handles 'Blog' JSON deserialzation and DataBase object manipulations.
     /// </summary>
+    [JsonObject(MemberSerialization.OptIn)]
     public class Blog {
 
         /// <summary>
@@ -121,7 +122,25 @@ namespace Tumblr.Universal.Core.Entities {
         /// <summary>
         /// The uri to the blogs avatar.
         /// </summary>
-        public string Avatar { get { return "http://api.tumblr.com/v2/blog/" + Name + ".tumblr.com/avatar/128"; } }
+        public string Avatar { get { return  (AvatarItems == null || AvatarItems.Count == 0) ? "http://api.tumblr.com/v2/blog/" + Name + ".tumblr.com/avatar/128" : AvatarItems.First().URL; } }
+
+        /// <summary>
+        /// Contains a list of avatars with various dimensions.
+        /// </summary>
+        [JsonProperty("avatar")]
+        public List<AvatarItem> AvatarItems { get; set; }
+
+        /// <summary>
+        /// Class that represents an avatar of a given width and height.
+        /// </summary>
+        public class AvatarItem {
+
+            /// <summary>
+            /// The url to the avatar with this size.
+            /// </summary>
+            [JsonProperty("url")]
+            public string URL { get; set; }
+        }
 
     }
 }
