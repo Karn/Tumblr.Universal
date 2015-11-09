@@ -44,7 +44,7 @@ namespace Tumblr.Universal.Services.Request {
         /// </summary>
         /// <returns>Parsed JSON as an 'Account' object.</returns>
         public async Task<Account> RetrieveAccount() {
-            var result = await RequestBuilder.Instance.GET(EndpointManager.EndPoints["ACCOUNT"], new RequestParameters());
+            var result = await RequestBuilder.Instance.GET(APIEndpoints.ACCOUNT.ToString(), new RequestParameters());
 
             if (result.StatusCode == HttpStatusCode.OK) {
                 try {
@@ -113,6 +113,55 @@ namespace Tumblr.Universal.Services.Request {
             }
 
             throw new Exception(string.Format("Request failed, server returned '{0}' with reason '{1}'", result.StatusCode, result.ReasonPhrase));
+        }
+
+        /// <summary>
+        /// Creates a GET request to 'like' a given post.
+        /// </summary>
+        /// <param name="id">The id of the given post.</param>
+        /// <param name="reblogKey">The corresponsing reblogKey for the given post.</param>
+        /// <returns></returns>
+        public async Task<bool> LikePost(string id, string reblogKey) {
+            return (await RequestBuilder.Instance.GET(APIEndpoints.LIKE.ToString(),
+                new RequestParameters() {
+                    {"id", id },
+                    {"reblog_key", reblogKey}
+                })).StatusCode == HttpStatusCode.OK;
+        }
+
+        /// <summary>
+        /// Creates a GET request to 'unlike' a given post.
+        /// </summary>
+        /// <param name="id">The id of the given post.</param>
+        /// <param name="reblogKey">The corresponsing reblogKey for the given post.</param>
+        /// <returns></returns>
+        public async Task<bool> UnlikePost(string id, string reblogKey) {
+            return (await RequestBuilder.Instance.GET(APIEndpoints.UNLIKE.ToString(),
+                new RequestParameters() {
+                    {"id", id },
+                    {"reblog_key", reblogKey}
+                })).StatusCode == HttpStatusCode.OK;
+        }
+
+        /// <summary>
+        /// Creates a POST request to 'reblog' a given post.
+        /// </summary>
+        /// <param name="id">The id of the given post.</param>
+        /// <param name="reblogKey">The corresponding reblogKey for the given post.</param>
+        /// <param name="blogName">The name of the blog under the account to which this post will be 
+        /// 'reblogged' to.</param>
+        /// <param name="caption">Any additional text that is to be added to this post.</param>
+        /// <param name="tags">String containing a comma delimited list of tags.</param>
+        /// <returns></returns>
+        public async Task<bool> ReblogPost(string id, string reblogKey, string blogName = "",
+            string caption = "", string tags = "") {
+            return (await RequestBuilder.Instance.POST(string.Format(APIEndpoints.REBLOG.ToString(), blogName),
+                new RequestParameters() {
+                    { "id", id },
+                    { "reblog_key", reblogKey },
+                    { "comment", caption },
+                    { "tags", tags }
+                })).StatusCode == HttpStatusCode.Created;
         }
     }
 }
