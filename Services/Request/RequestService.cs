@@ -38,6 +38,15 @@ namespace Tumblr.Universal.Services.Request {
 
         }
 
+        /// <summary>
+        /// Provides an accessor for the global URL encoder.
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
+        public string Encode(string s) {
+            return RequestBuilder.Instance.Encode(s);
+        }
+
 
         /// <summary>
         /// Fetches the account information of the blogs associated with the current session.
@@ -153,15 +162,9 @@ namespace Tumblr.Universal.Services.Request {
         /// <param name="caption">Any additional text that is to be added to this post.</param>
         /// <param name="tags">String containing a comma delimited list of tags.</param>
         /// <returns></returns>
-        public async Task<bool> ReblogPost(string id, string reblogKey, string blogName = "",
-            string caption = "", string tags = "") {
+        public async Task<bool> ReblogPost(string blogName, RequestParameters parameters) {
             return (await RequestBuilder.Instance.POST(string.Format(APIEndpoints.REBLOG.ToString(), blogName),
-                new RequestParameters() {
-                    { "id", id },
-                    { "reblog_key", reblogKey },
-                    { "comment", caption },
-                    { "tags", tags }
-                })).StatusCode == HttpStatusCode.Created;
+                parameters)).StatusCode == HttpStatusCode.Created;
         }
     }
 }
