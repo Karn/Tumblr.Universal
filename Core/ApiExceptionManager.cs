@@ -12,6 +12,5 @@ namespace Tumblr.Universal.Core {
     internal class ApiExceptionManager {
 
 
-
     }
 }

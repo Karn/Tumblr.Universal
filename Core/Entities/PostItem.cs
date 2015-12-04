@@ -145,6 +145,12 @@ namespace Tumblr.Universal.Core.Entities {
         public ObservableCollection<Photo> PostPhotos { get; set; }
 
         /// <summary>
+        /// The URL of the icon associated with the takeover post.
+        /// </summary>
+        [JsonProperty("icon_url")]
+        public string IconUrl { get; set; }
+
+        /// <summary>
         /// List of photos associated with the post.
         /// </summary>
         [JsonProperty("trail")]
