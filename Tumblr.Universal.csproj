@@ -128,7 +128,7 @@
     <Compile Include="Services\Request\RequestParameters.cs" />
     <Compile Include="Services\Request\RequestService.cs" />
     <Compile Include="Core\ApiExceptionManager.cs" />
-    <Compile Include="Core\Endpoints.cs" />
+    <Compile Include="Core\ApiEndpoints.cs" />
     <Compile Include="Core\TumblrClient.cs" />
     <Content Include="Properties\Sapphire.Core.rd.xml" />
   </ItemGroup>

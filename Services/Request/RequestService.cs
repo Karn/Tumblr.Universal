@@ -53,7 +53,7 @@ namespace Tumblr.Universal.Services.Request {
         /// </summary>
         /// <returns>Parsed JSON as an 'Account' object.</returns>
         public async Task<Account> RetrieveAccount() {
-            var result = await RequestBuilder.Instance.GET(APIEndpoints.ACCOUNT.ToString(), new RequestParameters());
+            var result = await RequestBuilder.Instance.GET(ApiEndpoints.ACCOUNT.ToString(), new RequestParameters());
 
             if (result.StatusCode == HttpStatusCode.OK) {
                 try {
@@ -99,11 +99,36 @@ namespace Tumblr.Universal.Services.Request {
         }
 
         /// <summary>
+        /// Fetches the blog information for a particular user.
+        /// </summary>
+        /// <param name="blogName">The name of the blog that is being requested.</param>
+        /// <returns>Parsed JSON as an 'Blog' object.</returns>
+        public async Task<Blog> RetrieveBlog(string blogName) {
+            var paramenters = new RequestParameters();
+            paramenters.Add("api_key", TumblrClient.ConsumerKey);
+
+            var result = await RequestBuilder.Instance.GET(string.Format(ApiEndpoints.BLOG.ToString(), blogName), paramenters);
+
+            if (result.StatusCode == HttpStatusCode.OK) {
+                try {
+                    Debug.WriteLine(await result.Content.ReadAsStringAsync());
+                    var parsedData = JsonConvert.DeserializeObject<ResponseModel.GetBlog>(await result.Content.ReadAsStringAsync());
+                    
+                    return parsedData.response.blog;
+                } catch {
+                    throw new Exception("Unable to deserialize response into JSON object.");
+                }
+            }
+
+            throw new Exception(string.Format("Request failed, server returned '{0}' with reason '{1}'", result.StatusCode, result.ReasonPhrase));
+        }
+
+        /// <summary>
         /// Retrieves posts from a given API endpoint.
         /// </summary>
         /// <param name="endPoint">The endpoint from which the requests are to be retrieved from. Eg. /dashboard</param>
         /// <param name="parameters">List of parameters that are to be included in the request. Eg. Key: "reblog_info" Value: "true"</param>
-        /// <returns>List of 'ActivityItem' objects.</returns>
+        /// <returns>List of 'PostItem' objects.</returns>
         public async Task<List<PostItem>> RetrievePosts(string endPoint, RequestParameters parameters) {
             parameters.Add("api_key", TumblrClient.ConsumerKey);
             parameters.Add("reblog_info", "true");
@@ -125,13 +150,32 @@ namespace Tumblr.Universal.Services.Request {
         }
 
         /// <summary>
+        /// Retrieves blog posts from a given blog name.
+        /// <seealso cref="RetrievePosts(string, RequestParameters)"/>
+        /// </summary>
+        /// <param name="blogName">The blog name from which the posts are to be retrieved from. Eg. staff</param>
+        /// <param name="parameters">List of parameters that are to be included in the request. Eg. Key: "reblog_info" Value: "true"</param>
+        /// <returns>List of 'ActivityItem' objects.</returns>
+        public async Task<List<PostItem>> RetreiveBlogPosts(string blogName, RequestParameters parameters) {
+
+            var result = await RetrievePosts(string.Format(ApiEndpoints.BLOG_POSTS.ToString(), blogName), parameters);
+
+            foreach (PostItem post in result) {
+                post.object_type = "blog";
+            }
+
+            return result;
+        }
+
+
+        /// <summary>
         /// Creates a GET request to 'like' a given post.
         /// </summary>
         /// <param name="id">The id of the given post.</param>
         /// <param name="reblogKey">The corresponsing reblogKey for the given post.</param>
         /// <returns></returns>
         public async Task<bool> LikePost(string id, string reblogKey) {
-            return (await RequestBuilder.Instance.GET(APIEndpoints.LIKE.ToString(),
+            return (await RequestBuilder.Instance.GET(ApiEndpoints.LIKE.ToString(),
                 new RequestParameters() {
                     {"id", id },
                     {"reblog_key", reblogKey}
@@ -145,7 +189,7 @@ namespace Tumblr.Universal.Services.Request {
         /// <param name="reblogKey">The corresponsing reblogKey for the given post.</param>
         /// <returns></returns>
         public async Task<bool> UnlikePost(string id, string reblogKey) {
-            return (await RequestBuilder.Instance.GET(APIEndpoints.UNLIKE.ToString(),
+            return (await RequestBuilder.Instance.GET(ApiEndpoints.UNLIKE.ToString(),
                 new RequestParameters() {
                     {"id", id },
                     {"reblog_key", reblogKey}
@@ -163,7 +207,7 @@ namespace Tumblr.Universal.Services.Request {
         /// <param name="tags">String containing a comma delimited list of tags.</param>
         /// <returns></returns>
         public async Task<bool> ReblogPost(string blogName, RequestParameters parameters) {
-            return (await RequestBuilder.Instance.POST(string.Format(APIEndpoints.REBLOG.ToString(), blogName),
+            return (await RequestBuilder.Instance.POST(string.Format(ApiEndpoints.REBLOG.ToString(), blogName),
                 parameters)).StatusCode == HttpStatusCode.Created;
         }
     }

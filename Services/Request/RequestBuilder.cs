@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -128,6 +129,7 @@ namespace Tumblr.Universal.Services.Request {
         /// <param name="parameters">The query of the GET request.</param>
         /// <returns>String containing the result of the request.</returns>
         public async Task<HttpResponseMessage> GET(string URL, RequestParameters parameters) {
+            Debug.WriteLine(URL);
             try {
                 using (var client = new HttpClient(new HttpClientHandler { AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate })) {
 
@@ -199,7 +201,7 @@ namespace Tumblr.Universal.Services.Request {
             }
         }
 
-        public async Task<HttpResponseMessage> POST(string URL, StorageFile file, RequestParameters parameters) {
+        public async Task<HttpResponseMessage> POST(string URL, RequestParameters parameters, StorageFile file) {
             try {
                 using (var client = new HttpClient() { MaxResponseContentBufferSize = int.MaxValue }) {
                     client.DefaultRequestHeaders.ExpectContinue = false;
