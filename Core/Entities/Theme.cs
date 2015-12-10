@@ -8,6 +8,12 @@ namespace Tumblr.Universal.Core.Entities {
     public class Theme {
 
         /// <summary>
+        /// URI to the original header image.
+        /// </summary>
+        [JsonProperty("show_avatar")]
+        public bool ShowAvatar { get; set; }
+
+        /// <summary>
         /// URI to the header image as set by user.
         /// </summary>
         [JsonProperty("header_image_focused")]
