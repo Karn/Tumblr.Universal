@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Tumblr.Universal.Services.Request;
 using Tumblr.Universal.Core;
+using Tumblr.Universal.Services.Request;
 
 namespace Tumblr.Universal.Services {
 

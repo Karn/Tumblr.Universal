@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Tumblr.Universal.Core;
-
-namespace Tumblr.Universal.Core {
+﻿namespace Tumblr.Universal.Core {
 
     /// <summary>
     /// Defines the basic endpoints for the Tumblr API.
