@@ -49,5 +49,7 @@
         public static Endpoint LIKE = new Endpoint("/user/like");
         public static Endpoint UNLIKE = new Endpoint("/user/unlike");
         public static Endpoint REBLOG = new Endpoint("/blog/{0}.tumblr.com/post/reblog");
+        public static Endpoint FOLLOW = new Endpoint("/user/follow");
+        public static Endpoint UNFOLLOW = new Endpoint("/user/unfollow");
     }
 }

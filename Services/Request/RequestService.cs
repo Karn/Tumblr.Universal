@@ -195,16 +195,36 @@ namespace Tumblr.Universal.Services.Request {
         /// <summary>
         /// Creates a POST request to 'reblog' a given post.
         /// </summary>
-        /// <param name="id">The id of the given post.</param>
-        /// <param name="reblogKey">The corresponding reblogKey for the given post.</param>
-        /// <param name="blogName">The name of the blog under the account to which this post will be 
-        /// 'reblogged' to.</param>
-        /// <param name="caption">Any additional text that is to be added to this post.</param>
-        /// <param name="tags">String containing a comma delimited list of tags.</param>
+        /// <param name="blogName">The name of the blog that is reblogging a given post.</param>
+        /// <param name="parameters">A collection of parameters being sent along with the request.</param>
         /// <returns></returns>
         public async Task<bool> ReblogPost(string blogName, RequestParameters parameters) {
             return (await RequestBuilder.Instance.POST(string.Format(ApiEndpoints.REBLOG.ToString(), blogName),
                 parameters)).StatusCode == HttpStatusCode.Created;
+        }
+
+        /// <summary>
+        /// Creates a POST request to 'follow' a given blog.
+        /// </summary>
+        /// <param name="blogUrl">The url of the blog that is being followed.</param>
+        /// <returns></returns>
+        public async Task<bool> Follow(string blogUrl) {
+            return (await RequestBuilder.Instance.POST(ApiEndpoints.FOLLOW.ToString(),
+                new RequestParameters() {
+                    {"url", blogUrl }
+                })).StatusCode == HttpStatusCode.OK;
+        }
+
+        /// <summary>
+        /// Creates a POST request to 'unfollow' a given blog.
+        /// </summary>
+        /// <param name="blogUrl">The url of the blog that is being followed.</param>
+        /// <returns></returns>
+        public async Task<bool> Unfollow(string blogUrl) {
+            return (await RequestBuilder.Instance.POST(ApiEndpoints.UNFOLLOW.ToString(),
+                new RequestParameters() {
+                    {"url", blogUrl }
+                })).StatusCode == HttpStatusCode.OK;
         }
     }
 }
